@@ -1,0 +1,46 @@
+cmake_minimum_required(VERSION 3.15.0)
+project (OpenGLTools)
+set(CMAKE_BUILD_TYPE Release)
+set (CMAKE_CXX_STANDARD 17)
+include(FetchContent)
+
+enable_testing()
+
+find_package(OpenGL REQUIRED)
+find_package(glfw3 REQUIRED)
+
+FetchContent_Declare(
+  glad_repo
+  GIT_REPOSITORY https://github.com/Dav1dde/glad.git
+  GIT_TAG        master
+)
+FetchContent_MakeAvailable(glad_repo)
+
+FetchContent_Declare(
+  linmath_repo
+  GIT_REPOSITORY https://github.com/datenwolf/linmath.h.git
+  GIT_TAG        master
+)
+FetchContent_MakeAvailable(linmath_repo)
+
+add_subdirectory(src)
+
+add_executable(main src/main.cpp src/gl_libs/glad.c)
+
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
+                    
+# target_link_libraries(main ${OPENGL_LIBRARIES} ${GLUT_LIBRARY})
+target_link_libraries(main 
+                      glfw ${GLFW_LIBRARIES} OpenGL::GL ${CMAKE_DL_LIBS})
+                      
+target_include_directories(main PUBLIC 
+                                ${linmath_repo_SOURCE_DIR}
+                           )
+
+set_target_properties(main
+    PROPERTIES
+    ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
+    LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
+    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin/Release"
+)
+
