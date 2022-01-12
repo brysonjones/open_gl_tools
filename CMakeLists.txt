@@ -10,6 +10,14 @@ find_package(OpenGL REQUIRED)
 find_package(glfw3 REQUIRED)
 
 FetchContent_Declare(
+  glm_repo
+  GIT_REPOSITORY https://github.com/g-truc/glm.git
+  GIT_TAG        master
+)
+FetchContent_MakeAvailable(glm_repo)
+include_directories(${glm_repo_SOURCE_DIR})
+
+FetchContent_Declare(
   glad_repo
   GIT_REPOSITORY https://github.com/Dav1dde/glad.git
   GIT_TAG        master
@@ -29,7 +37,6 @@ add_executable(main src/main.cpp src/gl_libs/glad.c)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
                     
-# target_link_libraries(main ${OPENGL_LIBRARIES} ${GLUT_LIBRARY})
 target_link_libraries(main 
                       glfw ${GLFW_LIBRARIES} OpenGL::GL ${CMAKE_DL_LIBS})
                       
