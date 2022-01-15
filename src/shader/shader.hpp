@@ -74,7 +74,7 @@ public:
 
     }
 
-    void setup_shader_program(float vertices[], int size){
+    void setup_shader_program(float vertices[], int v_size, unsigned int indices[], int i_size){
         // TODO: Add error handling and error codes
         // create VAO
         glGenVertexArrays(1, &VAO_vec[0]);  // TODO: make this not hardcoded
@@ -82,14 +82,20 @@ public:
         // create OpenGL Buffer for storing vertices and elements
         glGenBuffers(1, &VBO_vec[0]);  // TODO: make this not hardcoded
 
+        // create OpenGL Buffer for storing indices of points
+        glGenBuffers(1, &EBO_vec[0]);  // TODO: make this not hardcoded
+
         // bind the Vertex Array Object first, then bind and set vertex buffer(s), and then configure vertex attributes(s).
         glBindVertexArray(VAO_vec[0]);  // TODO: make this not hardcoded
 
         // bind buffer to gl array type
         glBindBuffer(GL_ARRAY_BUFFER, VBO_vec[0]);  // TODO: make this not hardcoded 
         // copy vertex data into buffer
-        glBufferData(GL_ARRAY_BUFFER, size, vertices, GL_STATIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, v_size, vertices, GL_STATIC_DRAW);
 
+        // this element is needed for plotting more than one triangle
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO_vec[0]);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, i_size, indices, GL_STATIC_DRAW);
 
         // tell OpenGL how to interpret the vertex data in memory
         // position attribute
@@ -110,6 +116,11 @@ public:
     // ------------------------------------------------------------------------
     void add_VBO(unsigned int VBO){ 
         VBO_vec.push_back(VBO);
+    }
+    // add EBO to vector
+    // ------------------------------------------------------------------------
+    void add_EBO(unsigned int EBO){ 
+        EBO_vec.push_back(EBO);
     }
 
     // activate the shader

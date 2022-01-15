@@ -19,21 +19,20 @@ void setup_shader_program();
 void transform_2D(float x, float y, float theta, Shader &shader);
 
 // settings
-const unsigned int SCR_WIDTH = 800;
-const unsigned int SCR_HEIGHT = 600;
+const unsigned int SCR_WIDTH = 1000;
+const unsigned int SCR_HEIGHT = 800;
 
 float vertices[] = {
     // positions         // colors
-     0.5f, -0.5f, 0.0f,  1.0f, 0.0f, 0.0f,   // bottom right
-    -0.5f, -0.5f, 0.0f,  0.0f, 1.0f, 0.0f,   // bottom left
-     0.0f,  0.5f, 0.0f,  0.0f, 0.0f, 1.0f    // top 
-};    
-
-// OpenGL objects 
-// std::string vertexShaderPath = "/home/bkjones/Documents/bkjones_cmu/open_gl_tools/src/shader/shader.vs";
-// std::string fragmentShaderPath =  "/home/bkjones/Documents/bkjones_cmu/open_gl_tools/src/shader/shader.fs";
-
-// Shader shader(vertexShaderPath.c_str(), fragmentShaderPath.c_str());
+     0.25f, -0.25f, 0.0f,  1.0f, 1.0f, 0.0f,   // bottom right
+    -0.25f, -0.25f, 0.0f,  0.0f, 1.0f, 1.0f,   // bottom left
+     0.25f,  0.25f, 0.0f,  0.0f, 1.0f, 1.0f,   // top right
+     -0.25f, 0.25f, 0.0f,  1.0f, 1.0f, 0.0f,   // top left
+};   
+unsigned int indices[] = {
+    0, 1, 2, // first triangle
+    1, 2, 3  // second triangle
+}; 
 
 int main()
 {
@@ -70,9 +69,11 @@ int main()
     Shader shader(vertexShaderPath.c_str(), fragmentShaderPath.c_str()); 
     unsigned int VAO;
     unsigned int VBO;
+    unsigned int EBO;
     shader.add_VAO(VAO);
     shader.add_VBO(VBO);
-    shader.setup_shader_program(vertices, sizeof(vertices));
+    shader.add_EBO(EBO);
+    shader.setup_shader_program(vertices, sizeof(vertices), indices, sizeof(indices));
     shader.use();
 
     // render loop
@@ -91,7 +92,7 @@ int main()
         // create transformations
         float x = 0.5*sin(glfwGetTime());
         float y = 0.5*cos(glfwGetTime());
-        float theta = 0.5*tan(glfwGetTime());
+        float theta = 0.1*tan(glfwGetTime());
         
         transform_2D(x, y, theta, shader);
 
@@ -142,8 +143,7 @@ void transform_2D(float x, float y, float theta, Shader &shader){
     
     // render the triangle
     glBindVertexArray(shader.VAO_vec[0]);  // TODO: make this not hardcoded
-    glDrawArrays(GL_TRIANGLES, 0, 3);
-
+    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 }
 
 
