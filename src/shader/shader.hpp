@@ -7,11 +7,15 @@
 #include <fstream>
 #include <sstream>
 #include <iostream>
+#include <vector>
 
 class Shader
 {
 public:
     unsigned int ID;
+    std::vector<unsigned int> VAO_vec; //
+    std::vector<unsigned int> VBO_vec; //
+    std::vector<unsigned int> EBO_vec; //
     // constructor generates the shader on the fly
     // ------------------------------------------------------------------------
     Shader(const char* vertexPath, const char* fragmentPath)
@@ -69,6 +73,45 @@ public:
         glDeleteShader(fragment);
 
     }
+
+    void setup_shader_program(float vertices[], int size){
+        // TODO: Add error handling and error codes
+        // create VAO
+        glGenVertexArrays(1, &VAO_vec[0]);  // TODO: make this not hardcoded
+
+        // create OpenGL Buffer for storing vertices and elements
+        glGenBuffers(1, &VBO_vec[0]);  // TODO: make this not hardcoded
+
+        // bind the Vertex Array Object first, then bind and set vertex buffer(s), and then configure vertex attributes(s).
+        glBindVertexArray(VAO_vec[0]);  // TODO: make this not hardcoded
+
+        // bind buffer to gl array type
+        glBindBuffer(GL_ARRAY_BUFFER, VBO_vec[0]);  // TODO: make this not hardcoded 
+        // copy vertex data into buffer
+        glBufferData(GL_ARRAY_BUFFER, size, vertices, GL_STATIC_DRAW);
+
+
+        // tell OpenGL how to interpret the vertex data in memory
+        // position attribute
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
+        glEnableVertexAttribArray(0);
+        // color attribute
+        glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3* sizeof(float)));
+        glEnableVertexAttribArray(1);
+
+    }
+
+    // add VAO to vector
+    // ------------------------------------------------------------------------
+    void add_VAO(unsigned int VAO){ 
+        VAO_vec.push_back(VAO);
+    }
+    // add VBO to vector
+    // ------------------------------------------------------------------------
+    void add_VBO(unsigned int VBO){ 
+        VBO_vec.push_back(VBO);
+    }
+
     // activate the shader
     // ------------------------------------------------------------------------
     void use() const
@@ -135,6 +178,7 @@ public:
     }
 
 private:
+
     // utility function for checking shader compilation/linking errors.
     // ------------------------------------------------------------------------
     void checkCompileErrors(GLuint shader, std::string type)

@@ -29,9 +29,6 @@ float vertices[] = {
 };    
 
 // OpenGL objects 
-// TODO: make these NOT global
-unsigned int VAO;
-unsigned int VBO;
 // std::string vertexShaderPath = "/home/bkjones/Documents/bkjones_cmu/open_gl_tools/src/shader/shader.vs";
 // std::string fragmentShaderPath =  "/home/bkjones/Documents/bkjones_cmu/open_gl_tools/src/shader/shader.fs";
 
@@ -48,7 +45,7 @@ int main()
 
     // glfw window creation
     // --------------------
-    GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "LearnOpenGL", NULL, NULL);
+    GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "OpenGL_Dev", NULL, NULL);
     if (window == NULL)
     {
         std::cout << "Failed to create GLFW window" << std::endl;
@@ -70,7 +67,11 @@ int main()
     std::string vertexShaderPath = "/home/bkjones/Documents/bkjones_cmu/open_gl_tools/src/shader/trans_shader.vs";
     std::string fragmentShaderPath =  "/home/bkjones/Documents/bkjones_cmu/open_gl_tools/src/shader/trans_shader.fs";
     Shader shader(vertexShaderPath.c_str(), fragmentShaderPath.c_str()); 
-    setup_shader_program();
+    unsigned int VAO;
+    unsigned int VBO;
+    shader.add_VAO(VAO);
+    shader.add_VBO(VBO);
+    shader.setup_shader_program(vertices, sizeof(vertices));
     shader.use();
 
     // render loop
@@ -88,7 +89,7 @@ int main()
 
         // create transformations
         glm::mat4 transform = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
-        transform = glm::translate(transform, glm::vec3(0.5f, -0.5f, 0.0f));
+        transform = glm::translate(transform, glm::vec3((float)0.5*cos(glfwGetTime()), (float)0.5*sin(glfwGetTime()), 0.0f));
         transform = glm::rotate(transform, (float)glfwGetTime(), glm::vec3(0.0f, 0.0f, 1.0f));
 
         // get matrix's uniform location and set matrix
@@ -97,7 +98,7 @@ int main()
         glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(transform));
         
         // render the triangle
-        glBindVertexArray(VAO);
+        glBindVertexArray(shader.VAO_vec[0]);  // TODO: make this not hardcoded
         glDrawArrays(GL_TRIANGLES, 0, 3);
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
@@ -134,30 +135,4 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
     glViewport(0, 0, width, height);
 }
 
-void setup_shader_program(){
-
-    // create VAO
-    glGenVertexArrays(1, &VAO);  
-
-    // create OpenGL Buffer for storing vertices and elements
-    glGenBuffers(1, &VBO); 
-
-    // bind the Vertex Array Object first, then bind and set vertex buffer(s), and then configure vertex attributes(s).
-    glBindVertexArray(VAO);
-
-    // bind buffer to gl array type
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);  
-    // copy vertex data into buffer
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
-
-    // tell OpenGL how to interpret the vertex data in memory
-    // position attribute
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
-    glEnableVertexAttribArray(0);
-    // color attribute
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3* sizeof(float)));
-    glEnableVertexAttribArray(1);
-
-}
 
