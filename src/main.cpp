@@ -16,6 +16,7 @@
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow *window);
 void setup_shader_program();
+void transform_2D(float x, float y, float theta, Shader &shader);
 
 // settings
 const unsigned int SCR_WIDTH = 800;
@@ -88,18 +89,11 @@ int main()
         glClear(GL_COLOR_BUFFER_BIT);
 
         // create transformations
-        glm::mat4 transform = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
-        transform = glm::translate(transform, glm::vec3((float)0.5*cos(glfwGetTime()), (float)0.5*sin(glfwGetTime()), 0.0f));
-        transform = glm::rotate(transform, (float)glfwGetTime(), glm::vec3(0.0f, 0.0f, 1.0f));
-
-        // get matrix's uniform location and set matrix
-        shader.use();
-        unsigned int transformLoc = glGetUniformLocation(shader.ID, "transform");
-        glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(transform));
+        float x = 0.5*sin(glfwGetTime());
+        float y = 0.5*cos(glfwGetTime());
+        float theta = 0.5*tan(glfwGetTime());
         
-        // render the triangle
-        glBindVertexArray(shader.VAO_vec[0]);  // TODO: make this not hardcoded
-        glDrawArrays(GL_TRIANGLES, 0, 3);
+        transform_2D(x, y, theta, shader);
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------
@@ -133,6 +127,23 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
     // make sure the viewport matches the new window dimensions; note that width and 
     // height will be significantly larger than specified on retina displays.
     glViewport(0, 0, width, height);
+}
+
+void transform_2D(float x, float y, float theta, Shader &shader){
+    // create transformations
+    glm::mat4 transform = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
+    transform = glm::translate(transform, glm::vec3(x, y, 0.0f));
+    transform = glm::rotate(transform, theta, glm::vec3(0.0f, 0.0f, 1.0f));
+
+    // get matrix's uniform location and set matrix
+    shader.use();
+    unsigned int transformLoc = glGetUniformLocation(shader.ID, "transform");
+    glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(transform));
+    
+    // render the triangle
+    glBindVertexArray(shader.VAO_vec[0]);  // TODO: make this not hardcoded
+    glDrawArrays(GL_TRIANGLES, 0, 3);
+
 }
 
 
