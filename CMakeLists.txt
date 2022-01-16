@@ -33,12 +33,14 @@ FetchContent_MakeAvailable(linmath_repo)
 
 add_subdirectory(src)
 
-add_executable(main src/main.cpp src/gl_libs/glad.c src/window.cpp)
+add_executable(main src/main.cpp src/gl_libs/glad.c)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
                     
 target_link_libraries(main 
-                      glfw ${GLFW_LIBRARIES} OpenGL::GL ${CMAKE_DL_LIBS})
+                      glfw ${GLFW_LIBRARIES} 
+                      OpenGL::GL ${CMAKE_DL_LIBS}
+                      oglt::window)
                       
 target_include_directories(main PUBLIC 
                                 ${linmath_repo_SOURCE_DIR}

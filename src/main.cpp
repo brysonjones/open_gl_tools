@@ -12,7 +12,7 @@
 #include <cmath>
 
 #include "shader/shader.hpp"
-#include "window.hpp"
+#include "window/window.hpp"
 
 void transform_2D(float x, float y, float theta, Shader &shader);
 

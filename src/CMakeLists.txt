@@ -1,1 +1,1 @@
-add_library(${PROJECT_NAME} main.cpp)
+add_subdirectory(window)
