@@ -33,7 +33,7 @@ FetchContent_MakeAvailable(linmath_repo)
 
 add_subdirectory(src)
 
-add_executable(main src/main.cpp src/gl_libs/glad.c)
+add_executable(main src/main.cpp src/gl_libs/glad.c src/window.cpp)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
                     
@@ -43,6 +43,11 @@ target_link_libraries(main
 target_include_directories(main PUBLIC 
                                 ${linmath_repo_SOURCE_DIR}
                            )
+
+file(COPY src/shader/trans_shader.vs 
+     DESTINATION ${CMAKE_BINARY_DIR}/bin/Release/shader/)
+file(COPY src/shader/trans_shader.fs 
+     DESTINATION ${CMAKE_BINARY_DIR}/bin/Release/shader/)
 
 set_target_properties(main
     PROPERTIES
