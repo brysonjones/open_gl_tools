@@ -45,6 +45,9 @@ public:
     }
 
     void setup_shader_program(float vertices[], int v_size, unsigned int indices[], int i_size, int buffer_index){
+        add_VAO();
+        add_VBO();
+        add_EBO();
         // TODO: Add error handling and error codes
         // create VAO
         glGenVertexArrays(1, &VAO_vec[buffer_index]);

@@ -10,20 +10,6 @@
 #include <glm/ext/scalar_constants.hpp> // glm::pi
 #include <glm/gtc/type_ptr.hpp>
 
-class Graphics
-{
-public:
-
-    // variables
-
-    // functions
-    Graphics();
-    int setup();
-
-private:
-
-    // variables
-
-    // functions
-
-};
+namespace graphics {
+    void transform_2D(float x, float y, float theta, unsigned int transformLoc);
+}
