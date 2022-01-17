@@ -35,24 +35,24 @@ include_directories(${linmath_repo_SOURCE_DIR})
 add_subdirectory(src)
 include_directories(src/shader)
 
-# add_executable(main src/main.cpp)
+add_executable(main src/main.cpp)
 
-# set(CMAKE_INCLUDE_CURRENT_DIR ON)
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
                     
-# target_link_libraries(main 
-#                       glfw ${GLFW_LIBRARIES} 
-#                       OpenGL::GL ${CMAKE_DL_LIBS}
-#                       oglt::window
-#                       oglt::graphics
-#                       oglt::shader
-#                       glad_libs)
+target_link_libraries(main 
+                      glfw ${GLFW_LIBRARIES} 
+                      OpenGL::GL ${CMAKE_DL_LIBS}
+                      oglt::window
+                      oglt::graphics
+                      oglt::shader
+                      glad_libs)
 
-# set_target_properties(main
-#     PROPERTIES
-#     ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
-#     LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
-#     RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin/Release"
-# )
+set_target_properties(main
+    PROPERTIES
+    ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
+    LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
+    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin/Release"
+)
 
 
 
