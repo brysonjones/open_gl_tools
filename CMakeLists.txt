@@ -44,6 +44,7 @@ include_directories(src/shader)
 #                       OpenGL::GL ${CMAKE_DL_LIBS}
 #                       oglt::window
 #                       oglt::graphics
+#                       oglt::shader
 #                       glad_libs)
 
 # set_target_properties(main
