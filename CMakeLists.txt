@@ -33,6 +33,7 @@ FetchContent_MakeAvailable(linmath_repo)
 include_directories(${linmath_repo_SOURCE_DIR})
 
 add_subdirectory(src)
+include_directories(src/shader)
 
 # add_executable(main src/main.cpp)
 
