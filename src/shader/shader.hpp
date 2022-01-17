@@ -109,18 +109,32 @@ public:
 
     // add VAO to vector
     // ------------------------------------------------------------------------
-    void add_VAO(unsigned int VAO){ 
+    void add_VAO(){ 
+        unsigned int VAO;
         VAO_vec.push_back(VAO);
     }
     // add VBO to vector
     // ------------------------------------------------------------------------
-    void add_VBO(unsigned int VBO){ 
+    void add_VBO(){ 
+        unsigned int VBO;
         VBO_vec.push_back(VBO);
     }
     // add EBO to vector
     // ------------------------------------------------------------------------
-    void add_EBO(unsigned int EBO){ 
+    void add_EBO(){ 
+        unsigned int EBO;
         EBO_vec.push_back(EBO);
+    }
+    // cleaning up resources
+    // ------------------------------------------------------------------------
+    void delete_vertex_array(int index){ 
+        glDeleteVertexArrays(1, &VAO_vec[index]);
+        glDeleteBuffers(1, &VBO_vec[index]);
+        glDeleteBuffers(1, &EBO_vec[index]);
+        VAO_vec.erase(VAO_vec.begin() + index);
+        VBO_vec.erase(VBO_vec.begin() + index);
+        EBO_vec.erase(EBO_vec.begin() + index);
+
     }
 
     // activate the shader

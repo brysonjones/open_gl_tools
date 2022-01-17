@@ -1,20 +1,12 @@
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
-#include <glm/vec3.hpp> // glm::vec3
-#include <glm/vec4.hpp> // glm::vec4
-#include <glm/mat4x4.hpp> // glm::mat4
-#include <glm/ext/matrix_transform.hpp> // glm::translate, glm::rotate, glm::scale
-#include <glm/ext/matrix_clip_space.hpp> // glm::perspective
-#include <glm/ext/scalar_constants.hpp> // glm::pi
-#include <glm/gtc/type_ptr.hpp>
 
 #include <iostream>
 #include <cmath>
 
 #include "shader/shader.hpp"
 #include "window/window.hpp"
+#include "graphics/graphics.hpp"
 
-void transform_2D(float x, float y, float theta, Shader &shader);
+void transform_2D(float x, float y, float theta, Shader &shader, int obj_index);
 
 float vertices[] = {
     // positions         // colors
@@ -54,14 +46,13 @@ int main()
     Shader shader(vertexShaderPath.c_str(), fragmentShaderPath.c_str()); 
 
     // TODO: clean up code below -- these ints could be created in a less explicit manner
-    unsigned int VAO, VBO, EBO;
-    shader.add_VAO(VAO);
-    shader.add_VBO(VBO);
-    shader.add_EBO(EBO);
+    shader.add_VAO();
+    shader.add_VBO();
+    shader.add_EBO();
     shader.setup_shader_program(vertices, sizeof(vertices), indices, sizeof(indices), 0);
-    shader.add_VAO(VAO);
-    shader.add_VBO(VBO);
-    shader.add_EBO(EBO);
+    shader.add_VAO();
+    shader.add_VBO();
+    shader.add_EBO();
     shader.setup_shader_program(vertices, sizeof(vertices), indices, sizeof(indices), 1);
 
     shader.use();
@@ -70,30 +61,27 @@ int main()
     // -----------
     while (!window.render_loop()){
 
-        glBindVertexArray(shader.VAO_vec[0]); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
-
         // create transformations
         float x = 0.1*sin(glfwGetTime());
         float y = 0.1*cos(4*glfwGetTime());
         float theta = 0.1*tan(glfwGetTime());
         
-        transform_2D(x, y, theta, shader);
-
-        glBindVertexArray(shader.VAO_vec[1]); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
+        transform_2D(x, y, theta, shader, 0);
 
         // create transformations
         x = 0.5*sin(glfwGetTime());
         y = 0.5*cos(4*glfwGetTime());
         theta = 1*tan(glfwGetTime());
         
-        transform_2D(x, y, theta, shader);
+        transform_2D(x, y, theta, shader, 1);
 
     }
 
     // optional: de-allocate all resources once they've outlived their purpose:
     // ------------------------------------------------------------------------
-    glDeleteVertexArrays(1, &VAO);
-    glDeleteBuffers(1, &VBO);
+    while(shader.VAO_vec.size() > 0){
+        shader.delete_vertex_array(0);
+    }
 
     // glfw: terminate, clearing all previously allocated GLFW resources.
     // ------------------------------------------------------------------
@@ -101,7 +89,7 @@ int main()
     return 0;
 }
 
-void transform_2D(float x, float y, float theta, Shader &shader){
+void transform_2D(float x, float y, float theta, Shader &shader, int obj_index){
     // create transformations
     glm::mat4 transform = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
     transform = glm::translate(transform, glm::vec3(x, y, 0.0f));
@@ -113,7 +101,7 @@ void transform_2D(float x, float y, float theta, Shader &shader){
     glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(transform));
     
     // render the triangle
-    glBindVertexArray(shader.VAO_vec[0]);  // TODO: make this not hardcoded
+    glBindVertexArray(shader.VAO_vec[obj_index]);
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 }
 
