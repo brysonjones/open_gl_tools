@@ -47,15 +47,12 @@ target_include_directories(main PUBLIC
                                 ${linmath_repo_SOURCE_DIR}
                            )
 
-file(COPY src/shader/trans_shader.vs 
-     DESTINATION ${CMAKE_BINARY_DIR}/bin/Release/shader/)
-file(COPY src/shader/trans_shader.fs 
-     DESTINATION ${CMAKE_BINARY_DIR}/bin/Release/shader/)
-
 set_target_properties(main
     PROPERTIES
     ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
     LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
     RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin/Release"
 )
+
+
 

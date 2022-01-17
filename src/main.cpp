@@ -22,13 +22,6 @@ unsigned int indices[] = {
 
 int main()
 {
-    // glfw: initialize and configure
-    // ------------------------------
-    glfwInit();
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-
     // glfw window creation
     // --------------------
     Window window;
@@ -37,9 +30,7 @@ int main()
     }
 
     // set up shader object
-    std::string vertexShaderPath = "/home/bkjones/Documents/bkjones_cmu/open_gl_tools/src/shader/trans_shader.vs";
-    std::string fragmentShaderPath =  "/home/bkjones/Documents/bkjones_cmu/open_gl_tools/src/shader/trans_shader.fs";
-    Shader shader(vertexShaderPath.c_str(), fragmentShaderPath.c_str()); 
+    Shader shader; 
 
     // TODO: clean up code below -- these ints could be created in a less explicit manner
     shader.add_VAO();
