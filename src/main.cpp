@@ -58,17 +58,33 @@ int main()
     shader.add_VAO(VAO);
     shader.add_VBO(VBO);
     shader.add_EBO(EBO);
-    shader.setup_shader_program(vertices, sizeof(vertices), indices, sizeof(indices));
+    shader.setup_shader_program(vertices, sizeof(vertices), indices, sizeof(indices), 0);
+    shader.add_VAO(VAO);
+    shader.add_VBO(VBO);
+    shader.add_EBO(EBO);
+    shader.setup_shader_program(vertices, sizeof(vertices), indices, sizeof(indices), 1);
+
     shader.use();
 
     // render loop
     // -----------
     while (!window.render_loop()){
 
+        glBindVertexArray(shader.VAO_vec[0]); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
+
         // create transformations
-        float x = 0.5*sin(glfwGetTime());
-        float y = 0.5*cos(4*glfwGetTime());
-        float theta = 1*tan(glfwGetTime());
+        float x = 0.1*sin(glfwGetTime());
+        float y = 0.1*cos(4*glfwGetTime());
+        float theta = 0.1*tan(glfwGetTime());
+        
+        transform_2D(x, y, theta, shader);
+
+        glBindVertexArray(shader.VAO_vec[1]); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
+
+        // create transformations
+        x = 0.5*sin(glfwGetTime());
+        y = 0.5*cos(4*glfwGetTime());
+        theta = 1*tan(glfwGetTime());
         
         transform_2D(x, y, theta, shader);
 
