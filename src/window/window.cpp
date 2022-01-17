@@ -9,10 +9,14 @@ int Window::setup(){
     {
         std::cout << "Failed to create GLFW window" << std::endl;
         glfwTerminate();
-        return -1;
+        return 1;
     }
     glfwMakeContextCurrent(glfw_object);
     glfwSetFramebufferSizeCallback(glfw_object, framebuffer_size_callback);
+
+    if (load_opengl_ptrs()){
+        return 2;
+    }
 
     return 0;
 }

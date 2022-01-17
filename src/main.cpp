@@ -36,10 +36,6 @@ int main()
         return 1;
     }
 
-    if (window.load_opengl_ptrs()){
-        return 2;
-    }
-
     // set up shader object
     std::string vertexShaderPath = "/home/bkjones/Documents/bkjones_cmu/open_gl_tools/src/shader/trans_shader.vs";
     std::string fragmentShaderPath =  "/home/bkjones/Documents/bkjones_cmu/open_gl_tools/src/shader/trans_shader.fs";
