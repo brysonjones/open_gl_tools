@@ -4,6 +4,5 @@ add_library(oglt::shader ALIAS shader)
 
 target_link_libraries(shader 
                       glm)
-add_dependencies(shader 
-                 glm)
+
           

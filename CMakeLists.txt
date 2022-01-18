@@ -46,12 +46,23 @@ add_subdirectory(src)
 #                       oglt::shader
 #                       glad_libs)
 
-# set_target_properties(main
-#     PROPERTIES
-#     ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
-#     LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
-#     RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin/Release"
-# )
+set_target_properties(
+                    window
+                    graphics
+                    shader 
+    PROPERTIES
+    ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
+    LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
+    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin/Release"
+)
 
+
+install(TARGETS 
+            window
+            graphics
+            shader 
+        ARCHIVE DESTINATION ARCHIVE_OUTPUT_DIRECTORY
+        LIBRARY DESTINATION LIBRARY_OUTPUT_DIRECTORY
+        RUNTIME DESTINATION RUNTIME_OUTPUT_DIRECTORY)
 
 
