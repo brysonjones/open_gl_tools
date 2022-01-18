@@ -46,23 +46,76 @@ add_subdirectory(src)
 #                       oglt::shader
 #                       glad_libs)
 
-set_target_properties(
-                    window
-                    graphics
-                    shader 
-    PROPERTIES
-    ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
-    LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
-    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin/Release"
+# set_target_properties(
+#                     window
+#                     graphics
+#                     shader 
+#     PROPERTIES
+#     ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
+#     LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
+#     RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin/Release"
+# )
+
+
+# install(TARGETS 
+#             window
+#             graphics
+#             shader 
+#         ARCHIVE DESTINATION ARCHIVE_OUTPUT_DIRECTORY
+#         LIBRARY DESTINATION LIBRARY_OUTPUT_DIRECTORY
+#         RUNTIME DESTINATION RUNTIME_OUTPUT_DIRECTORY)
+
+# install(EXPORT glm 
+#         DESTINATION "${CMAKE_BINARY_DIR}/lib")
+# INSTALL(FILES
+#         DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+
+
+include(CMakePackageConfigHelpers)
+
+set(exported_targets_name "${PROJECT_NAME}Targets")
+set(exported_targets_filename "${exported_targets_name}.cmake")
+set(export_dirpath "${CMAKE_BINARY_DIR}/lib/cmake/")
+set(config_basename "${PROJECT_NAME}Config")
+set(config_filename "${config_basename}.cmake")
+set(version_filename "${config_basename}Version.cmake")
+
+# write_basic_package_version_file(
+#     ${version_filename}
+#     COMPATIBILITY SameMajorVersion
+# )
+
+# configure_file("cmake/${config_filename}.in" "${config_filename}" @ONLY)
+
+install(
+    TARGETS     window
+                graphics
+                shader 
+                glm
+                glad_libs
+    EXPORT ${exported_targets_name}
+    ARCHIVE DESTINATION "lib"
+    PUBLIC_HEADER DESTINATION "include/cppuuid"
 )
-
-
-install(TARGETS 
-            window
-            graphics
-            shader 
-        ARCHIVE DESTINATION ARCHIVE_OUTPUT_DIRECTORY
-        LIBRARY DESTINATION LIBRARY_OUTPUT_DIRECTORY
-        RUNTIME DESTINATION RUNTIME_OUTPUT_DIRECTORY)
+install(
+    EXPORT ${exported_targets_name}
+    FILE ${exported_targets_filename}
+    # NAMESPACE cppuuid::
+    DESTINATION ${export_dirpath}
+)
+install(
+    FILES
+        "${CMAKE_CURRENT_BINARY_DIR}/${config_filename}"
+        "${CMAKE_CURRENT_BINARY_DIR}/${version_filename}"
+    DESTINATION
+        ${export_dirpath}
+)
+install(
+    DIRECTORY
+        "${CMAKE_CURRENT_SOURCE_DIR}/include/cppuuid"
+        "${CMAKE_CURRENT_BINARY_DIR}/include/cppuuid"
+    DESTINATION
+        "include"
+)
 
 
