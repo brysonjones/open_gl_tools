@@ -87,35 +87,35 @@ set(version_filename "${config_basename}Version.cmake")
 
 # configure_file("cmake/${config_filename}.in" "${config_filename}" @ONLY)
 
-install(
-    TARGETS     window
-                graphics
-                shader 
-                glm
-                glad_libs
-    EXPORT ${exported_targets_name}
-    ARCHIVE DESTINATION "lib"
-    PUBLIC_HEADER DESTINATION "include/cppuuid"
-)
-install(
-    EXPORT ${exported_targets_name}
-    FILE ${exported_targets_filename}
-    # NAMESPACE cppuuid::
-    DESTINATION ${export_dirpath}
-)
-install(
-    FILES
-        "${CMAKE_CURRENT_BINARY_DIR}/${config_filename}"
-        "${CMAKE_CURRENT_BINARY_DIR}/${version_filename}"
-    DESTINATION
-        ${export_dirpath}
-)
-install(
-    DIRECTORY
-        "${CMAKE_CURRENT_SOURCE_DIR}/include/cppuuid"
-        "${CMAKE_CURRENT_BINARY_DIR}/include/cppuuid"
-    DESTINATION
-        "include"
-)
+# install(
+#     TARGETS     window
+#                 graphics
+#                 shader 
+#                 glm
+#                 glad_libs
+#     EXPORT ${exported_targets_name}
+#     ARCHIVE DESTINATION "lib"
+#     PUBLIC_HEADER DESTINATION "include/cppuuid"
+# )
+# install(
+#     EXPORT ${exported_targets_name}
+#     FILE ${exported_targets_filename}
+#     # NAMESPACE cppuuid::
+#     DESTINATION ${export_dirpath}
+# )
+# install(
+#     FILES
+#         "${CMAKE_CURRENT_BINARY_DIR}/${config_filename}"
+#         "${CMAKE_CURRENT_BINARY_DIR}/${version_filename}"
+#     DESTINATION
+#         ${export_dirpath}
+# )
+# install(
+#     DIRECTORY
+#         "${CMAKE_CURRENT_SOURCE_DIR}/include/cppuuid"
+#         "${CMAKE_CURRENT_BINARY_DIR}/include/cppuuid"
+#     DESTINATION
+#         "include"
+# )
 
 
