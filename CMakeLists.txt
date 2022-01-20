@@ -14,8 +14,17 @@ FetchContent_Declare(
   GIT_REPOSITORY https://github.com/g-truc/glm.git
   GIT_TAG        master
 )
-FetchContent_MakeAvailable(glm_repo)
-include_directories(${glm_repo_SOURCE_DIR})
+# Check if population has already been performed
+FetchContent_GetProperties(glm_repo)
+if(NOT glm_repo_POPULATED)
+  # Fetch the content using previously declared details
+  FetchContent_Populate(glm_repo)
+  add_subdirectory(${glm_repo_SOURCE_DIR} ${glm_repo_BINARY_DIR})
+endif()
+# FetchContent_MakeAvailable(glm_repo)
+# include_directories(${glm_repo_SOURCE_DIR})
+# add_library(glm-lib INTERFACE) 
+# target_include_directories(glm-lib INTERFACE ${glm_repo_SOURCE_DIR}/include/) 
 
 FetchContent_Declare(
   glad_repo
