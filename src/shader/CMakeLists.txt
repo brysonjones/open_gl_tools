@@ -6,5 +6,5 @@ target_link_libraries(shader PUBLIC
                       glad_libs
                       glm::glm)
           
-target_include_directories(graphics PUBLIC
+target_include_directories(shader PUBLIC
                            glm)
