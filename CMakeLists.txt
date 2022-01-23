@@ -20,6 +20,7 @@ FetchContent_GetProperties(glm_repo)
 if(NOT glm_repo_POPULATED)
   FetchContent_Populate(glm_repo)
   add_subdirectory(${glm_repo_SOURCE_DIR} ${glm_repo_BINARY_DIR})
+  include_directories(${glm_repo_SOURCE_DIR})
 endif()
 
 # FetchContent_Declare(
