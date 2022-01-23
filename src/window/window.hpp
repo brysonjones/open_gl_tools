@@ -15,7 +15,7 @@ public:
 
     // variables
     const unsigned int WINDOW_WIDTH = 1000;  // TODO: make modular
-    const unsigned int WINDOW_HEIGHT = 800;  // TODO: make modular
+    const unsigned int WINDOW_HEIGHT = 1000;  // TODO: make modular
     std::string title = "Robot Visualization";
     GLFWwindow* glfw_object;
 
