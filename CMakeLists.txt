@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 3.15.0)
-project (OpenGLTools)
+project (oglt VERSION 1.0.0
+                     DESCRIPTION "A library for OpenGL tools"
+                     HOMEPAGE_URL "https://github.com/brysonjones/open_gl_tools")
 set(CMAKE_BUILD_TYPE Release)
 set (CMAKE_CXX_STANDARD 17)
 include(FetchContent)
@@ -14,24 +16,18 @@ FetchContent_Declare(
   GIT_REPOSITORY https://github.com/g-truc/glm.git
   GIT_TAG        master
 )
-# Check if population has already been performed
 FetchContent_GetProperties(glm_repo)
 if(NOT glm_repo_POPULATED)
-  # Fetch the content using previously declared details
   FetchContent_Populate(glm_repo)
   add_subdirectory(${glm_repo_SOURCE_DIR} ${glm_repo_BINARY_DIR})
 endif()
-# FetchContent_MakeAvailable(glm_repo)
-# include_directories(${glm_repo_SOURCE_DIR})
-# add_library(glm-lib INTERFACE) 
-# target_include_directories(glm-lib INTERFACE ${glm_repo_SOURCE_DIR}/include/) 
 
-FetchContent_Declare(
-  glad_repo
-  GIT_REPOSITORY https://github.com/Dav1dde/glad.git
-  GIT_TAG        master
-)
-FetchContent_MakeAvailable(glad_repo)
+# FetchContent_Declare(
+#   glad_repo
+#   GIT_REPOSITORY https://github.com/Dav1dde/glad.git
+#   GIT_TAG        master
+# )
+# FetchContent_MakeAvailable(glad_repo)
 
 FetchContent_Declare(
   linmath_repo
@@ -42,6 +38,34 @@ FetchContent_MakeAvailable(linmath_repo)
 include_directories(${linmath_repo_SOURCE_DIR})
 
 add_subdirectory(src)
+
+# Self
+# set(oglt_INCLUDE_DIRS ${oglt_INCLUDE_DIRS} 
+#     "${PROJECT_SOURCE_DIR}/src/shader/" 
+#     "${PROJECT_SOURCE_DIR}/src/windows/" 
+#     "${PROJECT_SOURCE_DIR}/src/graphics/")
+# set(oglt_LIBRARIES ${oglt_LIBRARIES} 
+#     "${PROJECT_BINARY_DIR}/lib/liboglt.a")
+
+# add_library(oglt INTERFACE
+#             ${CMAKE_CURRENT_SOURCE_DIR}/src/shader/shader.cpp
+#             ${CMAKE_CURRENT_SOURCE_DIR}/src/window/window.cpp
+#             ${CMAKE_CURRENT_SOURCE_DIR}/src/graphics/graphics.cpp
+#             ${CMAKE_CURRENT_SOURCE_DIR}/src/glad/glad.c)
+
+
+# set(oglt_INCLUDE_DIRS ${oglt_INCLUDE_DIRS} 
+#     ${GLFW_INCLUDE_DIRS}
+#     ${linmath_repo_SOURCE_DIR}
+#     ${glm_repo_SOURCE_DIR}/glm
+#     )
+# set(oglt_LIBRARIES ${oglt_LIBRARIES} 
+#     ${GLFW_LIBRARIES}
+#     ${CMAKE_DL_LIBS}
+#     ${OPENGL_LIBRARIES}
+#   )
+
+# configure_file(${PROJECT_NAME}Config.cmake.in "${CMAKE_BINARY_DIR}/${PROJECT_NAME}Config.cmake")
 
 # add_executable(main src/main.cpp)
 
@@ -59,6 +83,7 @@ add_subdirectory(src)
 #                     window
 #                     graphics
 #                     shader 
+#                     glm
 #     PROPERTIES
 #     ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
 #     LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
@@ -70,61 +95,11 @@ add_subdirectory(src)
 #             window
 #             graphics
 #             shader 
+#             glm
 #         ARCHIVE DESTINATION ARCHIVE_OUTPUT_DIRECTORY
 #         LIBRARY DESTINATION LIBRARY_OUTPUT_DIRECTORY
 #         RUNTIME DESTINATION RUNTIME_OUTPUT_DIRECTORY)
 
-# install(EXPORT glm 
-#         DESTINATION "${CMAKE_BINARY_DIR}/lib")
-# INSTALL(FILES
-#         DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
-
-
-include(CMakePackageConfigHelpers)
-
-set(exported_targets_name "${PROJECT_NAME}Targets")
-set(exported_targets_filename "${exported_targets_name}.cmake")
-set(export_dirpath "${CMAKE_BINARY_DIR}/lib/cmake/")
-set(config_basename "${PROJECT_NAME}Config")
-set(config_filename "${config_basename}.cmake")
-set(version_filename "${config_basename}Version.cmake")
-
-# write_basic_package_version_file(
-#     ${version_filename}
-#     COMPATIBILITY SameMajorVersion
-# )
-
-# configure_file("cmake/${config_filename}.in" "${config_filename}" @ONLY)
-
-# install(
-#     TARGETS     window
-#                 graphics
-#                 shader 
-#                 glm
-#                 glad_libs
-#     EXPORT ${exported_targets_name}
-#     ARCHIVE DESTINATION "lib"
-#     PUBLIC_HEADER DESTINATION "include/cppuuid"
-# )
-# install(
-#     EXPORT ${exported_targets_name}
-#     FILE ${exported_targets_filename}
-#     # NAMESPACE cppuuid::
-#     DESTINATION ${export_dirpath}
-# )
-# install(
-#     FILES
-#         "${CMAKE_CURRENT_BINARY_DIR}/${config_filename}"
-#         "${CMAKE_CURRENT_BINARY_DIR}/${version_filename}"
-#     DESTINATION
-#         ${export_dirpath}
-# )
-# install(
-#     DIRECTORY
-#         "${CMAKE_CURRENT_SOURCE_DIR}/include/cppuuid"
-#         "${CMAKE_CURRENT_BINARY_DIR}/include/cppuuid"
-#     DESTINATION
-#         "include"
-# )
-
-
+# # Self
+# set(oglt_INCLUDE_DIRS ${oglt_INCLUDE_DIRS} "${PROJECT_SOURCE_DIR}/include")
+# set(oglt_LIBRARIES ${oglt_LIBRARIES} "${PROJECT_BINARY_DIR}/libgraphics.a")

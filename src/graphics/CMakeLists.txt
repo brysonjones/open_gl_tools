@@ -7,4 +7,4 @@ target_link_libraries(graphics
                       glm::glm)
 
 target_include_directories(graphics PUBLIC
-                            glm)
+                           glm)
