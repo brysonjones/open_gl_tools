@@ -21,6 +21,8 @@ public:
     // ------------------------------------------------------------------------
     Shader();
 
+    void setup();
+
     void setup_shader_program(float vertices[], int v_size, unsigned int indices[], int i_size, int buffer_index);
 
     // add VAO to vector

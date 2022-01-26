@@ -3,48 +3,33 @@
 
 // ------------ Class Constructor Definition ------------
 
-Shader::Shader(){
-    // compile shaders
-    unsigned int vertex, fragment;
-    std::cout << "test\n";
-    // vertex shader
-    vertex = glCreateShader(GL_VERTEX_SHADER);
-    std::cout << "test\n";
-    glShaderSource(vertex, 1, &vShaderCode, NULL);
-    std::cout << "test\n";
-    glCompileShader(vertex);
-    std::cout << "test\n";
-    checkCompileErrors(vertex, "VERTEX");
-    std::cout << "test\n";
-    // fragment Shader
-    fragment = glCreateShader(GL_FRAGMENT_SHADER);
-    std::cout << "test\n";
-    glShaderSource(fragment, 1, &fShaderCode, NULL);
-    std::cout << "test\n";
-    glCompileShader(fragment);
-    std::cout << "test\n";
-    checkCompileErrors(fragment, "FRAGMENT");
-    std::cout << "test\n";
-    // shader Program
-    ID = glCreateProgram();
-    std::cout << "test\n";
-    glAttachShader(ID, vertex);
-    std::cout << "test\n";
-    glAttachShader(ID, fragment);
-    std::cout << "test\n";
-    glLinkProgram(ID);
-    std::cout << "test\n";
-    checkCompileErrors(ID, "PROGRAM");
-    std::cout << "test\n";
-    // delete the shaders as they're linked into our program now and no longer necessery
-    glDeleteShader(vertex);
-    std::cout << "test\n";
-    glDeleteShader(fragment);
-    std::cout << "test\n";
-
-}
+Shader::Shader(){}
 
 // ------------ Public Functions ------------
+
+void Shader::setup(){
+    // compile shaders
+    unsigned int vertex, fragment;
+    // vertex shader
+    vertex = glCreateShader(GL_VERTEX_SHADER);
+    glShaderSource(vertex, 1, &vShaderCode, NULL);
+    glCompileShader(vertex);
+    checkCompileErrors(vertex, "VERTEX");
+    // fragment Shader
+    fragment = glCreateShader(GL_FRAGMENT_SHADER);
+    glShaderSource(fragment, 1, &fShaderCode, NULL);
+    glCompileShader(fragment);
+    checkCompileErrors(fragment, "FRAGMENT");
+    // shader Program
+    ID = glCreateProgram();
+    glAttachShader(ID, vertex);
+    glAttachShader(ID, fragment);
+    glLinkProgram(ID);
+    checkCompileErrors(ID, "PROGRAM");
+    // delete the shaders as they're linked into our program now and no longer necessery
+    glDeleteShader(vertex);
+    glDeleteShader(fragment);
+}
 
 void Shader::setup_shader_program(float vertices[], int v_size, unsigned int indices[], int i_size, int buffer_index){
     // create buffers

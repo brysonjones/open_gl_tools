@@ -23,12 +23,6 @@ if(NOT glm_repo_POPULATED)
   include_directories(${glm_repo_SOURCE_DIR})
 endif()
 
-# FetchContent_Declare(
-#   glad_repo
-#   GIT_REPOSITORY https://github.com/Dav1dde/glad.git
-#   GIT_TAG        master
-# )
-# FetchContent_MakeAvailable(glad_repo)
 
 FetchContent_Declare(
   linmath_repo
