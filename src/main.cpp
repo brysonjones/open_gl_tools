@@ -29,6 +29,7 @@ int main()
 
     // set up shader object
     Shader shader; 
+    shader.setup();
 
     // TODO: clean up code below -- these ints could be created in a less explicit manner
     shader.setup_shader_program(vertices, sizeof(vertices), indices, sizeof(indices), 0);
