@@ -9,12 +9,12 @@
 #include <iostream>
 #include <vector>
 
-class Line
-{
-public:
-    Line();
-    int setup();
+// class Line
+// {
+// public:
+//     Line();
+//     int setup();
    
-private:
+// private:
 
-};
+// };

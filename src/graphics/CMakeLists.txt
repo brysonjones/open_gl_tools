@@ -1,4 +1,5 @@
-add_library(graphics STATIC graphics.cpp)
+add_library(graphics STATIC graphics.cpp
+                            line.cpp)
 
 add_library(oglt::graphics ALIAS graphics)
 

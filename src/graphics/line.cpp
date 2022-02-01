@@ -7,7 +7,7 @@ class Line {
     std::vector<float> vertices;
     glm::vec3 startPoint;
     glm::vec3 endPoint;
-    glm::mat4 MVP;
+    glm::mat4 transform;
     glm::vec3 lineColor;
 public:
     Line(glm::vec3 start, glm::vec3 end) {
@@ -15,7 +15,7 @@ public:
         startPoint = start;
         endPoint = end;
         lineColor = glm::vec3(1,1,1);
-        MVP = glm::mat4(1.0f);
+        transform = glm::mat4(1.0f);
 
         const char *vertexShaderSource = 
             #include "line_shader.vs"
@@ -67,8 +67,8 @@ public:
 
     }
 
-    int setMVP(glm::mat4 mvp) {
-        MVP = mvp;
+    int setTransform(glm::mat4 transformIn) {
+        transform = transformIn;
         return 1;
     }
 
@@ -79,7 +79,7 @@ public:
 
     int draw() {
         glUseProgram(shaderProgram);
-        glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "MVP"), 1, GL_FALSE, &MVP[0][0]);
+        glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "MVP"), 1, GL_FALSE, &transform[0][0]);
         glUniform3fv(glGetUniformLocation(shaderProgram, "color"), 1, &lineColor[0]);
 
         glBindVertexArray(VAO);
