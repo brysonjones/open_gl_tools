@@ -64,7 +64,7 @@ int Line::setup(glm::vec3 start, glm::vec3 end){
 
 int Line::setTransform(const std::string &name, glm::mat4 &transformIn) {
     glUseProgram(shaderProgram);
-    glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "transform"), 1, GL_FALSE, &transform[0][0]);
+    glUniformMatrix4fv(glGetUniformLocation(shaderProgram, name.c_str()), 1, GL_FALSE, &transform[0][0]);
     transform = transformIn;
     return 1;
 }
