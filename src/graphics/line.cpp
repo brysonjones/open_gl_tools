@@ -10,7 +10,11 @@ class Line {
     glm::mat4 transform;
     glm::vec3 lineColor;
 public:
-    Line(glm::vec3 start, glm::vec3 end) {
+    Line() {
+
+    }
+
+    int setup(glm::vec3 start, glm::vec3 end){
 
         startPoint = start;
         endPoint = end;
@@ -79,7 +83,7 @@ public:
 
     int draw() {
         glUseProgram(shaderProgram);
-        glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "MVP"), 1, GL_FALSE, &transform[0][0]);
+        glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "transform"), 1, GL_FALSE, &transform[0][0]);
         glUniform3fv(glGetUniformLocation(shaderProgram, "color"), 1, &lineColor[0]);
 
         glBindVertexArray(VAO);
