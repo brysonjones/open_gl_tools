@@ -21,10 +21,10 @@ class Line {
     glm::vec3 lineColor;
 public:
     Line();
-    
+
     int setup(glm::vec3 start, glm::vec3 end);
 
-    int setTransform(glm::mat4 transformIn);
+    int setTransform(const std::string &name, glm::mat4 &transformIn);
 
     int setColor(glm::vec3 color);
 

@@ -62,21 +62,21 @@ int Line::setup(glm::vec3 start, glm::vec3 end){
 
 }
 
-int Line::setTransform(glm::mat4 transformIn) {
+int Line::setTransform(const std::string &name, glm::mat4 &transformIn) {
+    glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "transform"), 1, GL_FALSE, &transform[0][0]);
     transform = transformIn;
     return 1;
 }
 
 int Line::setColor(glm::vec3 color) {
+    glUseProgram(shaderProgram);
+    glUniform3fv(glGetUniformLocation(shaderProgram, "color"), 1, &lineColor[0]);
     lineColor = color;
     return 1;
 }
 
 int Line::draw() {
     glUseProgram(shaderProgram);
-    glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "transform"), 1, GL_FALSE, &transform[0][0]);
-    glUniform3fv(glGetUniformLocation(shaderProgram, "color"), 1, &lineColor[0]);
-
     glBindVertexArray(VAO);
     glDrawArrays(GL_LINES, 0, 2);
     return 1;
