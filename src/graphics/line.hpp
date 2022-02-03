@@ -13,7 +13,8 @@
 
 class Line {
     int shaderProgram;
-    unsigned int VBO, VAO;
+    unsigned int lineVBO=4, instanceVBO=5, VAO=4; // TODO: Change this from hardcode
+    unsigned int instanceVBO;
     std::vector<float> vertices;
     glm::vec3 startPoint;
     glm::vec3 endPoint;
@@ -22,9 +23,9 @@ class Line {
 public:
     Line();
 
-    int setup(glm::vec3 start, glm::vec3 end);
+    int setup(glm::vec3 start, glm::vec3 end, glm::mat4 transform[10]);
 
-    int setTransform(const std::string &name, glm::mat4 &transformIn);
+    int setTransform(glm::mat4 &transformIn);
 
     int setColor(glm::vec3 color);
 
