@@ -14,7 +14,6 @@
 class Line {
     int shaderProgram;
     unsigned int lineVBO=4, instanceVBO=5, VAO=4; // TODO: Change this from hardcode
-    unsigned int instanceVBO;
     std::vector<float> vertices;
     glm::vec3 startPoint;
     glm::vec3 endPoint;
