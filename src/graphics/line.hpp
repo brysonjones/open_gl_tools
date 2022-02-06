@@ -23,7 +23,7 @@ class Line {
     public:
         Line();
 
-        int setup(glm::vec3 start, glm::vec3 end, std::vector<glm::mat4> &transformIn);
+        int setup();
         int updatePos(std::vector<float> &posIn);
         int updateTransform(std::vector<glm::mat4> &transformIn);
 

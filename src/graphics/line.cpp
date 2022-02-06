@@ -5,10 +5,8 @@ Line::Line() {
 
 }
 
-int Line::setup(glm::vec3 start, glm::vec3 end, std::vector<glm::mat4> &transformIn){
+int Line::setup(){
 
-    startPoint = start;
-    endPoint = end;
     lineColor = glm::vec3(1,1,1);
     // transform = glm::mat4(1.0f);
 
@@ -40,16 +38,8 @@ int Line::setup(glm::vec3 start, glm::vec3 end, std::vector<glm::mat4> &transfor
 
     glDeleteShader(vertexShader);
     glDeleteShader(fragmentShader);
-
-    vertices = {
-            start.x, start.y, start.z,
-            end.x, end.y, end.z,
-
-    };
     
     glGenVertexArrays(1, &VAO);
-
-    // updateTransform(transformIn);
 
 }
 
