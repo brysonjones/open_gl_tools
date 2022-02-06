@@ -24,7 +24,7 @@ class Line {
         Line();
 
         int setup(glm::vec3 start, glm::vec3 end, std::vector<glm::mat4> &transformIn);
-
+        int updatePos(std::vector<float> &posIn);
         int updateTransform(std::vector<glm::mat4> &transformIn);
 
         // int setTransform(glm::mat4 &transformIn);

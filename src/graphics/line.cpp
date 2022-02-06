@@ -48,20 +48,24 @@ int Line::setup(glm::vec3 start, glm::vec3 end, std::vector<glm::mat4> &transfor
     };
     
     glGenVertexArrays(1, &VAO);
+
+    // updateTransform(transformIn);
+
+}
+
+int Line::updatePos(std::vector<float> &posIn) {
     glGenBuffers(1, &lineVBO);
     glBindVertexArray(VAO);
 
     glBindBuffer(GL_ARRAY_BUFFER, lineVBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices.data(), GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(posIn), posIn.data(), GL_STATIC_DRAW);
 
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
 
-    glBindBuffer(GL_ARRAY_BUFFER, 0); 
+    // glBindBuffer(GL_ARRAY_BUFFER, 0); 
+    glVertexAttribDivisor(0, 0);
     glBindVertexArray(0); 
-
-    updateTransform(transformIn);
-
 }
 
 int Line::updateTransform(std::vector<glm::mat4> &transformIn) {
