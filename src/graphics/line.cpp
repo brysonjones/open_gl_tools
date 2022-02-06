@@ -69,8 +69,7 @@ int Line::updateTransform(std::vector<glm::mat4> &transformIn) {
     glGenBuffers(1, &instanceVBO);
     glBindBuffer(GL_ARRAY_BUFFER, instanceVBO);
     int numSegments = transformIn.size();
-    printf("Size of transforms: %d\n", numSegments);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(glm::mat4) * numSegments, &transformIn[0], GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(glm::mat4) * numSegments, &transformIn[0][0], GL_STATIC_DRAW);
 
     glBindVertexArray(VAO);
     // vertex attributes
@@ -90,9 +89,6 @@ int Line::updateTransform(std::vector<glm::mat4> &transformIn) {
     glVertexAttribDivisor(4, 1);
 
     glBindVertexArray(0);
-
-    glUseProgram(shaderProgram);
-    glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "transform"), 1, GL_FALSE, &transformIn[0][0][0]);
 
     return 1;
 }
