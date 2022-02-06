@@ -5,7 +5,7 @@ Line::Line() {
 
 }
 
-int Line::setup(glm::vec3 start, glm::vec3 end, glm::mat4 transform[10]){
+int Line::setup(glm::vec3 start, glm::vec3 end, std::vector<glm::mat4> &transformIn){
 
     startPoint = start;
     endPoint = end;
@@ -60,11 +60,17 @@ int Line::setup(glm::vec3 start, glm::vec3 end, glm::mat4 transform[10]){
     glBindBuffer(GL_ARRAY_BUFFER, 0); 
     glBindVertexArray(0); 
 
+    updateTransform(transformIn);
 
+}
+
+int Line::updateTransform(std::vector<glm::mat4> &transformIn) {
     // instance array setup
     glGenBuffers(1, &instanceVBO);
     glBindBuffer(GL_ARRAY_BUFFER, instanceVBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(glm::mat4) * 10, &transform[0], GL_STATIC_DRAW);
+    int numSegments = transformIn.size();
+    printf("Size of transforms: %d\n", numSegments);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(glm::mat4) * numSegments, &transformIn[0], GL_STATIC_DRAW);
 
     glBindVertexArray(VAO);
     // vertex attributes
@@ -85,28 +91,33 @@ int Line::setup(glm::vec3 start, glm::vec3 end, glm::mat4 transform[10]){
 
     glBindVertexArray(0);
 
-
-}
-
-int Line::setTransform(glm::mat4 &transformIn) {
     glUseProgram(shaderProgram);
-    glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "transform"), 1, GL_FALSE, &transform[0][0]);
-    transform = transformIn;
+    glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "transform"), 1, GL_FALSE, &transformIn[0][0][0]);
+
     return 1;
 }
+
+// int Line::setTransform(glm::mat4 &transformIn) {
+//     glUseProgram(shaderProgram);
+//     glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "transform"), 1, GL_FALSE, &transform[0][0]);
+//     transform = transformIn;
+//     return 1;
+// }
 
 int Line::setColor(glm::vec3 color) {
     glUseProgram(shaderProgram);
     glUniform3fv(glGetUniformLocation(shaderProgram, "color"), 1, &lineColor[0]);
     lineColor = color;
-    return 1;
+
+    return 0;
 }
 
 int Line::draw() {
     glUseProgram(shaderProgram);
     glBindVertexArray(VAO);
-    glDrawArraysInstanced(GL_LINES, 0, 2, 10);
-    return 1;
+    glDrawArraysInstanced(GL_LINES, 0, 2, numSegments);
+
+    return 0;
 }
 
 Line::~Line() {

@@ -17,18 +17,25 @@ class Line {
     std::vector<float> vertices;
     glm::vec3 startPoint;
     glm::vec3 endPoint;
-    glm::mat4 transform;
+    std::vector<glm::mat4> transform;
     glm::vec3 lineColor;
-public:
-    Line();
 
-    int setup(glm::vec3 start, glm::vec3 end, glm::mat4 transform[10]);
+    public:
+        Line();
 
-    int setTransform(glm::mat4 &transformIn);
+        int setup(glm::vec3 start, glm::vec3 end, std::vector<glm::mat4> &transformIn);
 
-    int setColor(glm::vec3 color);
+        int updateTransform(std::vector<glm::mat4> &transformIn);
 
-    int draw();
+        // int setTransform(glm::mat4 &transformIn);
 
-    ~Line();
+        int setColor(glm::vec3 color);
+
+        int draw();
+
+        ~Line();
+
+    private:
+        int numSegments; // number of transforms in vector
+
 };
