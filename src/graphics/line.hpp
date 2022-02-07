@@ -36,6 +36,6 @@ class Line {
         ~Line();
 
     private:
-        int numSegments; // number of transforms in vector
-
+        int numSegments; // number of vertices in line being drawn
+        int numTransforms; // number of transforms
 };

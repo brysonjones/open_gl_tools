@@ -50,7 +50,8 @@ int Line::updatePos(std::vector<float> &posIn) {
     glBindVertexArray(VAO);
 
     glBindBuffer(GL_ARRAY_BUFFER, lineVBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(float)*posIn.size(), posIn.data(), GL_STATIC_DRAW);
+    numSegments = posIn.size();
+    glBufferData(GL_ARRAY_BUFFER, sizeof(float)*numSegments, posIn.data(), GL_STATIC_DRAW);
 
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
@@ -64,8 +65,8 @@ int Line::updateTransform(std::vector<glm::mat4> &transformIn) {
     // instance array setup
     glGenBuffers(1, &instanceVBO);
     glBindBuffer(GL_ARRAY_BUFFER, instanceVBO);
-    numSegments = transformIn.size();
-    glBufferData(GL_ARRAY_BUFFER, sizeof(glm::mat4) * numSegments, transformIn.data(), GL_STATIC_DRAW);
+    numTransforms = transformIn.size();
+    glBufferData(GL_ARRAY_BUFFER, sizeof(glm::mat4) * numTransforms, transformIn.data(), GL_STATIC_DRAW);
 
     glBindVertexArray(VAO);
     // vertex attributes
@@ -89,13 +90,6 @@ int Line::updateTransform(std::vector<glm::mat4> &transformIn) {
     return 0;
 }
 
-// int Line::setTransform(glm::mat4 &transformIn) {
-//     glUseProgram(shaderProgram);
-//     glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "transform"), 1, GL_FALSE, &transform[0][0]);
-//     transform = transformIn;
-//     return 1;
-// }
-
 int Line::setColor(glm::vec3 color) {
     glUseProgram(shaderProgram);
     glUniform3fv(glGetUniformLocation(shaderProgram, "color"), 1, &lineColor[0]);
@@ -107,7 +101,7 @@ int Line::setColor(glm::vec3 color) {
 int Line::draw() {
     glUseProgram(shaderProgram);
     glBindVertexArray(VAO);
-    glDrawArraysInstanced(GL_LINE_STRIP, 0, 3, numSegments);
+    glDrawArraysInstanced(GL_LINE_STRIP, 0, numSegments, numTransforms);
 
     return 0;
 }
