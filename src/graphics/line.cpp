@@ -41,6 +41,8 @@ int Line::setup(){
     
     glGenVertexArrays(1, &VAO);
 
+    return 0;
+
 }
 
 int Line::updatePos(std::vector<float> &posIn) {
@@ -53,8 +55,9 @@ int Line::updatePos(std::vector<float> &posIn) {
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 
-    // glBindBuffer(GL_ARRAY_BUFFER, 0); 
     glBindVertexArray(0); 
+
+    return 0;
 }
 
 int Line::updateTransform(std::vector<glm::mat4> &transformIn) {
@@ -83,7 +86,7 @@ int Line::updateTransform(std::vector<glm::mat4> &transformIn) {
 
     glBindVertexArray(0);
 
-    return 1;
+    return 0;
 }
 
 // int Line::setTransform(glm::mat4 &transformIn) {
