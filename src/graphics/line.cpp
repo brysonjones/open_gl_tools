@@ -107,7 +107,7 @@ int Line::setColor(glm::vec3 color) {
 int Line::draw() {
     glUseProgram(shaderProgram);
     glBindVertexArray(VAO);
-    glDrawArraysInstanced(GL_LINE_STRIP, 0, 2, numSegments);
+    glDrawArraysInstanced(GL_LINE_STRIP, 0, 3, numSegments);
 
     return 0;
 }
