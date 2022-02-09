@@ -51,7 +51,7 @@ int Line::updatePos(std::vector<float> &posIn) {
 
     glBindBuffer(GL_ARRAY_BUFFER, lineVBO);
     numSegments = (posIn.size() / 3)  - 1; // TODO: check that this is divisible by 3 first
-    glBufferData(GL_ARRAY_BUFFER, sizeof(float)*numSegments, posIn.data(), GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(float)*posIn.size(), posIn.data(), GL_STATIC_DRAW);
 
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
