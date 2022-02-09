@@ -46,6 +46,9 @@ int Line::setup(){
 }
 
 int Line::updatePos(std::vector<float> &posIn) {
+    for (int i=0; i<posIn.size(); i++){
+        std::cout << posIn[i] << std::endl;
+    }
     glGenBuffers(1, &lineVBO);
     glBindVertexArray(VAO);
 
