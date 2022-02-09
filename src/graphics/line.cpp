@@ -53,7 +53,7 @@ int Line::updatePos(std::vector<float> &posIn) {
     glBindVertexArray(VAO);
 
     glBindBuffer(GL_ARRAY_BUFFER, lineVBO);
-    numSegments = posIn.size();
+    numSegments = posIn.size() - 1;
     glBufferData(GL_ARRAY_BUFFER, sizeof(float)*numSegments, posIn.data(), GL_STATIC_DRAW);
 
     glEnableVertexAttribArray(0);
