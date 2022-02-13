@@ -52,11 +52,11 @@ void Shader::initShader(std::vector<float> vertices, std::vector<unsigned int> i
     // bind buffer to gl array type
     glBindBuffer(GL_ARRAY_BUFFER, VBO_vec[buffer_index]);
     // copy vertex data into buffer
-    glBufferData(GL_ARRAY_BUFFER, vertices.size(), vertices.data(), GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(float)*vertices.size(), vertices.data(), GL_STATIC_DRAW);
 
     // this element is needed for plotting more than one triangle
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO_vec[buffer_index]);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size(), indices.data(), GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int)*indices.size(), indices.data(), GL_STATIC_DRAW);
 
     // tell OpenGL how to interpret the vertex data in memory
     // position attribute
