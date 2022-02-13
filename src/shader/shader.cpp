@@ -31,7 +31,7 @@ void Shader::setup(){
     glDeleteShader(fragment);
 }
 
-void Shader::setup_shader_program(float vertices[], int v_size, unsigned int indices[], int i_size, int buffer_index){
+void Shader::initShader(std::vector<float> vertices, std::vector<unsigned int> indices, int buffer_index){
     // create buffers
     add_VAO();
     add_VBO();
@@ -52,11 +52,11 @@ void Shader::setup_shader_program(float vertices[], int v_size, unsigned int ind
     // bind buffer to gl array type
     glBindBuffer(GL_ARRAY_BUFFER, VBO_vec[buffer_index]);
     // copy vertex data into buffer
-    glBufferData(GL_ARRAY_BUFFER, v_size, vertices, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, vertices.size(), vertices.data(), GL_STATIC_DRAW);
 
     // this element is needed for plotting more than one triangle
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO_vec[buffer_index]);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, i_size, indices, GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size(), indices.data(), GL_STATIC_DRAW);
 
     // tell OpenGL how to interpret the vertex data in memory
     // position attribute
