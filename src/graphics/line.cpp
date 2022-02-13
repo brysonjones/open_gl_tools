@@ -8,7 +8,6 @@ Line::Line() {
 int Line::setup(){
 
     lineColor = glm::vec3(1,1,1);
-    // transform = glm::mat4(1.0f);
 
     const char *vertexShaderSource = 
         #include "line_shader.vs"
