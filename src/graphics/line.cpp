@@ -50,7 +50,11 @@ int Line::updatePos(std::vector<float> &posIn) {
     glBindVertexArray(VAO);
 
     glBindBuffer(GL_ARRAY_BUFFER, lineVBO);
-    numSegments = (posIn.size() / 3)  - 1; // TODO: check that this is divisible by 3 first
+    if (posIn.size() % 3 == 0){
+        numSegments = (posIn.size() / 3)  - 1;
+    } else {
+        return 1;  // incorrect vector size provided; not divisible by 3
+    }
     glBufferData(GL_ARRAY_BUFFER, sizeof(float)*posIn.size(), posIn.data(), GL_STATIC_DRAW);
 
     glEnableVertexAttribArray(0);

@@ -27,8 +27,6 @@ class Line {
         int updatePos(std::vector<float> &posIn);
         int updateTransform(std::vector<glm::mat4> &transformIn);
 
-        // int setTransform(glm::mat4 &transformIn);
-
         int setColor(glm::vec3 color);
 
         int draw();
