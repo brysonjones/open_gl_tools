@@ -2,6 +2,13 @@
 
 #include <glad/glad.h>
 #include <glm/glm.hpp>
+#include <glm/vec3.hpp> // glm::vec3
+#include <glm/vec4.hpp> // glm::vec4
+#include <glm/mat4x4.hpp> // glm::mat4
+#include <glm/ext/matrix_transform.hpp> // glm::translate, glm::rotate, glm::scale
+#include <glm/ext/matrix_clip_space.hpp> // glm::perspective
+#include <glm/ext/scalar_constants.hpp> // glm::pi
+#include <glm/gtc/type_ptr.hpp>
 
 #include <string>
 #include <fstream>
@@ -15,7 +22,6 @@ public:
     unsigned int ID;
     std::vector<unsigned int> VAO_vec; //
     std::vector<unsigned int> VBO_vec; //
-    std::vector<unsigned int> EBO_vec; //
     
     // constructor generates the shader on the fly
     // ------------------------------------------------------------------------
@@ -23,7 +29,7 @@ public:
 
     void setup();
 
-    void initShader(std::vector<float> vertices, std::vector<unsigned int> indices, int buffer_index);
+    void initShader(std::vector<float> vertices, int buffer_index);
 
     // add VAO to vector
     // ------------------------------------------------------------------------
@@ -31,16 +37,17 @@ public:
     // add VBO to vector
     // ------------------------------------------------------------------------
     void add_VBO();
-    // add EBO to vector
-    // ------------------------------------------------------------------------
-    void add_EBO();
     // cleaning up resources
     // ------------------------------------------------------------------------
     void delete_vertex_array(int index);
     // activate the shader
     // ------------------------------------------------------------------------
     void use() const;
+    void bindVertex() const;
+    void draw() const;
     // utility uniform functions
+    // ------------------------------------------------------------------------
+    void setTransform2D(float x, float y, float theta) const;
     // ------------------------------------------------------------------------
     void setBool(const std::string &name, bool value) const;
     // ------------------------------------------------------------------------

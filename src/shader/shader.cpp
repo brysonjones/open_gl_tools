@@ -31,20 +31,16 @@ void Shader::setup(){
     glDeleteShader(fragment);
 }
 
-void Shader::initShader(std::vector<float> vertices, std::vector<unsigned int> indices, int buffer_index){
+void Shader::initShader(std::vector<float> vertices, int buffer_index){
     // create buffers
     add_VAO();
     add_VBO();
-    add_EBO();
     // TODO: Add error handling and error codes
     // create VAO
     glGenVertexArrays(1, &VAO_vec[buffer_index]);
 
     // create OpenGL Buffer for storing vertices and elements
     glGenBuffers(1, &VBO_vec[buffer_index]);
-
-    // create OpenGL Buffer for storing indices of points
-    glGenBuffers(1, &EBO_vec[buffer_index]);
 
     // bind the Vertex Array Object first, then bind and set vertex buffer(s), and then configure vertex attributes(s).
     glBindVertexArray(VAO_vec[buffer_index]);
@@ -53,10 +49,6 @@ void Shader::initShader(std::vector<float> vertices, std::vector<unsigned int> i
     glBindBuffer(GL_ARRAY_BUFFER, VBO_vec[buffer_index]);
     // copy vertex data into buffer
     glBufferData(GL_ARRAY_BUFFER, sizeof(float)*vertices.size(), vertices.data(), GL_STATIC_DRAW);
-
-    // this element is needed for plotting more than one triangle
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO_vec[buffer_index]);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int)*indices.size(), indices.data(), GL_STATIC_DRAW);
 
     // tell OpenGL how to interpret the vertex data in memory
     // position attribute
@@ -79,22 +71,13 @@ void Shader::add_VBO(){
     unsigned int VBO;
     VBO_vec.push_back(VBO);
 }
-// add EBO to vector
-// ------------------------------------------------------------------------
-void Shader::add_EBO(){ 
-    unsigned int EBO;
-    EBO_vec.push_back(EBO);
-}
 // cleaning up resources
 // ------------------------------------------------------------------------
 void Shader::delete_vertex_array(int index){ 
     glDeleteVertexArrays(1, &VAO_vec[index]);
     glDeleteBuffers(1, &VBO_vec[index]);
-    glDeleteBuffers(1, &EBO_vec[index]);
     VAO_vec.erase(VAO_vec.begin() + index);
     VBO_vec.erase(VBO_vec.begin() + index);
-    EBO_vec.erase(EBO_vec.begin() + index);
-
 }
 
 // activate the shader
@@ -103,7 +86,30 @@ void Shader::use() const
 { 
     glUseProgram(ID); 
 }
+void Shader::bindVertex() const
+{ 
+    use();
+    glBindVertexArray(VAO_vec[0]); // currently drawing only first element
+}
+void Shader::draw() const
+{ 
+    bindVertex();
+    // render the triangle
+    glDrawElements(GL_TRIANGLE_STRIP, 6, GL_UNSIGNED_INT, 0); // TODO: Define more modularly
+}
 // utility uniform functions
+// ------------------------------------------------------------------------
+void Shader::setTransform2D(float x, float y, float theta) const
+{
+    // create transformations
+    glm::mat4 transform = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
+    transform = glm::translate(transform, glm::vec3(x, y, 0.0f));
+    transform = glm::rotate(transform, theta, glm::vec3(0.0f, 0.0f, 1.0f));
+
+    // get matrix's uniform location and set matrix
+    unsigned int transformLoc = glGetUniformLocation(ID, "transform");
+    glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(transform));
+}
 // ------------------------------------------------------------------------
 void Shader::setBool(const std::string &name, bool value) const
 {         
