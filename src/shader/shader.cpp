@@ -95,7 +95,7 @@ void Shader::draw() const
 { 
     bindVertex();
     // render the triangle
-    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0); // TODO: Define more modularly
+    glDrawArrays(GL_TRIANGLES, 0, 6); // TODO: Define more modularly
 }
 // utility uniform functions
 // ------------------------------------------------------------------------
