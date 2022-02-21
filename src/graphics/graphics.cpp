@@ -30,7 +30,7 @@ namespace graphics {
         for (int i=0; i<6; i++){
             vertices[0 + i*6] = xLoc + xOffset[i];
             vertices[1 + i*6] = yLoc + yOffset[i];
-            vertices[2 + i*6] = zLoc + zOffset[i];
+            // vertices[2 + i*6] = zLoc + zOffset[i];
             if (color == RED){
                 vertices[3 + i*6] = 1.0;
             } else if (color == GREEN){
