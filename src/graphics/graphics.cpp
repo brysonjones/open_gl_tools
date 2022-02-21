@@ -27,7 +27,7 @@ namespace graphics {
                                       (float)(dims[1]/2)/map_size[1]};
         std::vector<float> zOffset = {0.0f};
         std::vector<float> vertices(36, 0);
-        for (int i=0; i<4; i++){
+        for (int i=0; i<6; i++){
             vertices[0 + i*6] = xLoc + xOffset[i];
             vertices[1 + i*6] = yLoc + yOffset[i];
             vertices[2 + i*6] = zLoc + zOffset[i];
