@@ -13,18 +13,18 @@ namespace graphics {
         float xLoc = (float) centerPos[0] / (map_size[0]/2);
         float yLoc = (float) centerPos[1] / (map_size[1]/2);
         float zLoc = 0.0f;
-        std::vector<float> xOffset = {(float)(dims[0]/2)/map_size[0], 
-                                      -(float)(dims[0]/2)/map_size[0], 
-                                      (float)(dims[0]/2)/map_size[0],  
-                                      -(float)(dims[0]/2)/map_size[0], 
-                                      (float)(dims[0]/2)/map_size[0], 
-                                      -(float)(dims[0]/2)/map_size[0]}; 
-        std::vector<float> yOffset = {-(float)(dims[1]/2)/map_size[1], 
-                                      -(float)(dims[1]/2)/map_size[1],   
-                                      (float)(dims[1]/2)/map_size[1], 
-                                      -(float)(dims[1]/2)/map_size[1],   
-                                      (float)(dims[1]/2)/map_size[1],  
-                                      (float)(dims[1]/2)/map_size[1]};
+        std::vector<float> xOffset = {(float)(dims[0])/map_size[0], 
+                                      -(float)(dims[0])/map_size[0], 
+                                      (float)(dims[0])/map_size[0],  
+                                      -(float)(dims[0])/map_size[0], 
+                                      (float)(dims[0])/map_size[0], 
+                                      -(float)(dims[0])/map_size[0]}; 
+        std::vector<float> yOffset = {-(float)(dims[1])/map_size[1], 
+                                      -(float)(dims[1])/map_size[1],   
+                                      (float)(dims[1])/map_size[1], 
+                                      -(float)(dims[1])/map_size[1],   
+                                      (float)(dims[1])/map_size[1],  
+                                      (float)(dims[1])/map_size[1]};
         std::vector<float> zOffset = {0.0f};
         std::vector<float> vertices(36, 0);
         for (int i=0; i<6; i++){
