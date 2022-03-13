@@ -104,7 +104,7 @@ void Shader::setTransform2D(float x, float y, float theta) const
     // create transformations
     glm::mat4 transform = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
     transform = glm::translate(transform, glm::vec3(x, y, 0.0f));
-    transform = glm::rotate(transform, theta, glm::vec3(0.0f, 0.0f, 1.0f));
+    transform = glm::rotate(transform, glm::radians(theta), glm::vec3(0.0f, 0.0f, 1.0f));
 
     // get matrix's uniform location and set matrix
     unsigned int transformLoc = glGetUniformLocation(ID, "transform");
